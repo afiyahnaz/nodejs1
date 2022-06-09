@@ -1,43 +1,42 @@
-console.log("hello node js");
-//.................................how to develop server for wesites.....................
-const http = require('http');
+const express = require('express');
+//........................common js...........................
 
-//handler function
-function handler(req,res){
-    //routing:........sending user to right place............
-    console.log(req.url);
-    switch(req.url){
-        case'/':
-        res.write("Node API");
-        break;
-        case'/products':
-               res.write("List of products");
-               break;
-       case'/books':
-               const books = [
-                   {id:1 , name: 'headfirst JS', cost: 140, stock:'true' },
-                   {id:2 , name: 'Book by Naz', cost: 140, stock:'false' },
-                   {id:3 , name: 'book by afi', cost: 140, stock:'true' },
-               ];
-               res.write(JSON.stringify(books));// using JSON should use JSON.Stringify
-               break;
-       case'/authour':
-               res.write("List of authour");
-               break;
-       case'/colors':
-               res.write("List of colors");
-               break;
-       default:
-                res.write("Not found");
-                break;
-
-    }
-    res.end();
-   }
-//higher order function...
-const server = http.createServer(handler);
-server.listen(3000,function(){
-    console.log("server is running on a port 3000!");  
+const defaultRouter = require('./routes/defaultRouter');
+const bookRouter = require('./routes/bookRouter');
+const app = express();
+app.listen(3000,function(){
+    console.log('server is running on 3000!!!');
 });
 
+//......register   routing.................................
+app.use(defaultRouter);
+app.use(bookRouter);
 
+
+
+//status codes
+//1xx : information
+//2xx : success,    200   ok,   201 created,  204 content
+//3xx : redirects
+//4xx : client errors,    404  
+//5xx : server errors,    501,   500
+//100 / sec - 100 / sec
+
+//HTTP request format
+//http protocol
+//url: www.google.com/api/users
+
+//Request headers:
+//Content-Type:application/json
+//accept:application/json
+//authorization:token
+//x-username: xlslsl
+//x-password:kadjfgd
+
+//Response Headers:
+//Content-type:application/json
+//accept:application/xml
+//max:
+
+
+//body:{}
