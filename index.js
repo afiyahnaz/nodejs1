@@ -1,20 +1,37 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 //........................common js...........................
 
 const defaultRouter = require('./routes/defaultRouter');
 const bookRouter = require('./routes/bookRouter');
+
 const app = express();
 app.listen(3000,function(){
     console.log('server is running on 3000!!!');
 });
 
+app.use(bodyParser.json());
+
 //......register   routing.................................
-app.use(defaultRouter);
-app.use(bookRouter);
+app.use('/',defaultRouter);
+app.use('/api/books',bookRouter);
+
+
+//.............unexpected end of json input...........
+
+// try{
+//     const result = JSON.parse('');
+//     console.log(result);
+// } catch (err){
+//     //syntaxError: unexpected end of JSON input
+//     console.log('error', err);
+// }
 
 
 
-//status codes
+
+
+//status co
 //1xx : information
 //2xx : success,    200   ok,   201 created,  204 content
 //3xx : redirects
